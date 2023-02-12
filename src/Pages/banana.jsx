@@ -1,7 +1,7 @@
 export const Banana = () => {
   return (
     <div>
-      <h1>Bananarama</h1>
+      <h1>Just Banana</h1>
     </div>
   );
 };

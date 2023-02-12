@@ -1,5 +1,5 @@
 import React from 'react';
-import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, AccumulationLegend, PieSeries, AccumulationDataLabel, Inject, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
+// import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, AccumulationLegend, PieSeries, AccumulationDataLabel, Inject, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 
 import { useStateContext } from '../../Contexts/ContextProvider';
 
@@ -7,16 +7,15 @@ const Doughnut = ({ id, data, legendVisiblity, height }) => {
   const { currentMode } = useStateContext();
 
   return (
-    <AccumulationChartComponent
+    <div
       id={id}
       legendSettings={{ visible: legendVisiblity, background: 'white' }}
       height={height}
       background={currentMode === 'Dark' ? '#33373E' : '#fff'}
       tooltip={{ enable: true }}
     >
-      <Inject services={[AccumulationLegend, PieSeries, AccumulationDataLabel, AccumulationTooltip]} />
-      <AccumulationSeriesCollectionDirective>
-        <AccumulationSeriesDirective
+      <div>
+        <div
           name="Sale"
           dataSource={data}
           xName="x"
@@ -38,8 +37,8 @@ const Doughnut = ({ id, data, legendVisiblity, height }) => {
             },
           }}
         />
-      </AccumulationSeriesCollectionDirective>
-    </AccumulationChartComponent>
+      </div>
+    </div>
   );
 };
 
