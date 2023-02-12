@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { SiShopware } from 'react-icons/si';
+import logo from '../assets/logo.png';
 import { MdOutlineCancel } from 'react-icons/md';
 
 import { links } from '../Data/dummy';
@@ -31,7 +31,8 @@ const Sidebar = () => {
               onClick={handleCloseSidebar}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
-              <SiShopware /> <span>Shoppy</span>
+              <img src={logo} alt="logo" className="w-20 h-20" />
+              <span>Delight-Systems</span>
             </Link>
             <div content="Menu" position="BottomCenter">
               <button
