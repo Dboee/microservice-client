@@ -11,34 +11,35 @@ export const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [errors, setErrors] = useState([]);
+  const [componentErrors, setComponentErrors] = useState([]);
+  const { doRequest, errors } = useRequest({
+    url: '/api/users/signup',
+    method: 'post',
+    body: {
+      username,
+      email,
+      password,
+    },
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password !== passwordConfirmation) {
-      setErrors([{ message: 'Passwords do not match' }]);
+      setComponentErrors([{ message: 'Passwords do not match' }]);
     } else {
-      try {
-        const response = await axios.post('/api/users/signup', {
-          username,
-          email,
-          password,
-        });
-        console.log(response.data);
-      } catch (error) {
-        console.log(error.response.data);
-        setErrors(error.response.data.errors);
-      }
+      doRequest();
     }
-    setName = '';
-    setEmail = '';
-    setPassword = '';
-    setPasswordConfirmation = '';
+    if (!errors && !componentErrors) {
+      setName('');
+      setEmail('');
+      setPassword('');
+      setPasswordConfirmation('');
+    }
   };
 
-  useEffect(() => {
-    console.log('errors: ', errors);
-  }, [errors]);
+  // useEffect(() => {
+  //   console.log('errors: ', errors);
+  // }, [componentErrors]);
 
   return (
     <div>
@@ -122,7 +123,7 @@ export const SignUp = () => {
               </div>
             </div>
 
-            {errors.map((error, index) => {
+            {componentErrors.map((error, index) => {
               return (
                 <div
                   class='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
@@ -132,9 +133,9 @@ export const SignUp = () => {
                   <span
                     class='absolute top-0 bottom-0 right-0 px-4 py-3'
                     onClick={() => {
-                      let newErrors = [...errors];
+                      let newErrors = [...componentErrors];
                       newErrors.splice(index, 1);
-                      setErrors(newErrors);
+                      setComponentErrors(newErrors);
                     }}
                   >
                     <svg
@@ -150,6 +151,7 @@ export const SignUp = () => {
                 </div>
               );
             })}
+            {errors}
             <div className='flex items-center justify-end mt-4'>
               <a
                 className='text-sm text-gray-600 underline hover:text-gray-900'
@@ -165,7 +167,7 @@ export const SignUp = () => {
                   if (password === passwordConfirmation) {
                     handleSubmit();
                   } else {
-                    setErrors([
+                    setComponentErrors([
                       { message: 'Password and Confirm Password do not match' },
                     ]);
                   }
