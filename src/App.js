@@ -2,25 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 
-import { Navbar, Footer, Sidebar, ThemeSettings } from './Components';
-// import {
-//   Ecommerce,
-//   Orders,
-//   Calendar,
-//   Employees,
-//   Stacked,
-//   Pyramid,
-//   Customers,
-//   Kanban,
-//   Line,
-//   Area,
-//   Bar,
-//   Pie,
-//   Financial,
-//   ColorPicker,
-//   ColorMapping,
-//   Editor,
-// } from './Pages';
 import './App.css';
 
 // Contexts
@@ -28,7 +9,12 @@ import { useStateContext } from './Contexts/ContextProvider';
 
 // Pages
 import { Banana } from './Pages/banana';
+import { Home } from './Pages/Home';
 import { SignUp } from './Pages/auth/signup';
+
+// Components
+import { Navbar, Footer, Sidebar, ThemeSettings } from './Components';
+import { Loading } from './Components/Loading';
 
 const App = () => {
   const {
@@ -39,6 +25,7 @@ const App = () => {
     currentColor,
     themeSettings,
     setThemeSettings,
+    isAuthenticated,
   } = useStateContext();
 
   useEffect(() => {
@@ -54,13 +41,13 @@ const App = () => {
     // adds wrapper div with class dark if currentMode is Dark
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <BrowserRouter>
-        <div className="flex relative dark:bg-main-dark-bg">
+        <div className='flex relative dark:bg-main-dark-bg'>
           {activeMenu ? (
-            <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+            <div className='w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white '>
               <Sidebar />
             </div>
           ) : (
-            <div className="w-0 dark:bg-secondary-dark-bg">
+            <div className='w-0 dark:bg-secondary-dark-bg'>
               <Sidebar />
             </div>
           )}
@@ -72,13 +59,15 @@ const App = () => {
                 : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
             }
           >
-            <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
+            <div className='fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full '>
               <Navbar />
             </div>
             <div>{themeSettings && <ThemeSettings />}</div>
+
             <Routes>
-              <Route path="/banana" element={<Banana />} />
-              <Route path="/auth/signup" element={<SignUp />} />
+              <Route path='/' element={<Home />} />
+              <Route path='/banana' element={<Banana />} />
+              <Route path='/auth/signup' element={<SignUp />} />
             </Routes>
             <Footer />
           </div>
