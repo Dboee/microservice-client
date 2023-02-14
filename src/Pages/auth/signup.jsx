@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useRequest } from '../../hooks/useRequest';
-
-import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 import logo from '../../assets/logo.png';
 
@@ -12,6 +11,8 @@ export const SignUp = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [componentErrors, setComponentErrors] = useState([]);
+
+  const navigate = useNavigate();
   const { doRequest, errors } = useRequest({
     url: '/api/users/signup',
     method: 'post',
@@ -20,6 +21,10 @@ export const SignUp = () => {
       email,
       password,
     },
+    onSuccess: () => {
+      navigate('/');
+      console.log('Success');
+    },
   });
 
   const handleSubmit = async (event) => {
@@ -27,19 +32,9 @@ export const SignUp = () => {
     if (password !== passwordConfirmation) {
       setComponentErrors([{ message: 'Passwords do not match' }]);
     } else {
-      doRequest();
-    }
-    if (!errors && !componentErrors) {
-      setName('');
-      setEmail('');
-      setPassword('');
-      setPasswordConfirmation('');
+      await doRequest();
     }
   };
-
-  // useEffect(() => {
-  //   console.log('errors: ', errors);
-  // }, [componentErrors]);
 
   return (
     <div>
@@ -47,7 +42,7 @@ export const SignUp = () => {
         <div>
           <a href='/' style={{ display: 'flex', alignItems: 'center' }}>
             <img src={logo} alt='logo' className='w-20 h-20' />
-            <h3 className='text-4xl font-bold text-purple-600'>
+            <h3 className='text-3xl font-bold' style={{ color: '#e67f34' }}>
               Delight-Systems
             </h3>
           </a>
