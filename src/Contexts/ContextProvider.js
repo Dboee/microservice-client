@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+import axios from 'axios';
 
 const StateContext = createContext();
 
@@ -7,8 +9,6 @@ const initialState = {
   cart: false,
   userProfile: false,
   notification: false,
-  // state for checking if user is authenticated as boolean
-  isAuthenticated: false,
 };
 
 export const ContextProvider = ({ children }) => {
@@ -33,6 +33,16 @@ export const ContextProvider = ({ children }) => {
 
   const handleClick = (clicked) =>
     setIsClicked({ ...initialState, [clicked]: true });
+
+  const APIgetCurrentUser = async () => {
+    const res = await axios.get('/api/auth/currentuser');
+    console.log(res.data);
+    setCurrentUser(res.data);
+  };
+
+  useEffect(() => {
+    APIgetCurrentUser();
+  }, []);
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
