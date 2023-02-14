@@ -35,9 +35,9 @@ export const ContextProvider = ({ children }) => {
     setIsClicked({ ...initialState, [clicked]: true });
 
   const APIgetCurrentUser = async () => {
-    const res = await axios.get('/api/auth/currentuser');
-    console.log(res.data);
-    setCurrentUser(res.data);
+    const res = await axios.get('/api/users/currentuser');
+    console.log(res.data.currentUser);
+    setCurrentUser(res.data.currentUser);
   };
 
   useEffect(() => {
