@@ -7,6 +7,8 @@ import avatar from '../Data/avatar.jpg';
 import { Notification, UserProfile } from '.';
 import { useStateContext } from '../Contexts/ContextProvider';
 
+import { useNavigate } from 'react-router';
+
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <div content={title} position='BottomCenter'>
     <button
@@ -36,6 +38,12 @@ const Navbar = () => {
     currentUser,
   } = useStateContext();
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('NavCurrentUser:', currentUser);
+  }, [currentUser]);
+
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
 
@@ -53,6 +61,8 @@ const Navbar = () => {
       setActiveMenu(true);
     }
   }, [screenSize]);
+
+  useEffect(() => {}, [currentUser]);
 
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
 
@@ -72,25 +82,38 @@ const Navbar = () => {
           color={currentColor}
           icon={<RiNotification3Line />}
         /> */}
-        <div content='Profile' position='BottomCenter'>
-          <div
-            className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
-            onClick={() => handleClick('userProfile')}
-          >
-            {/* <img
+        {currentUser ? (
+          <div content='Profile' position='BottomCenter'>
+            <div
+              className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
+              onClick={() => handleClick('userProfile')}
+            >
+              {/* <img
               className='rounded-full w-8 h-8'
               src={avatar}
               alt='user-profile'
             /> */}
-            <p>
-              <span className='text-gray-400 text-14'>Hi,</span>{' '}
-              <span className='text-gray-400 font-bold ml-1 text-14'>
-                {currentUser.username}
-              </span>
-            </p>
-            <MdKeyboardArrowDown className='text-gray-400 text-14' />
+
+              <p>
+                <span className='text-gray-400 text-14'>Hi,</span>{' '}
+                <span className='text-gray-400 font-bold ml-1 text-14'>
+                  {currentUser.username}
+                </span>
+              </p>
+
+              <MdKeyboardArrowDown className='text-gray-400 text-14' />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className='flex items-center gap-2'>
+            <div className='cursor-pointer p-1 hover:bg-light-gray rounded-lg text-slate-200'>
+              <a href='/auth/signup'>Sign up</a>
+            </div>
+            <div className='cursor-pointer p-1 hover:bg-light-gray rounded-lg text-slate-200'>
+              <a href='/auth/signin'>Sign In</a>
+            </div>
+          </div>
+        )}
 
         {isClicked.notification && <Notification />}
         {isClicked.userProfile && <UserProfile />}
