@@ -10,12 +10,7 @@ export const Home = () => {
   return (
     <div>
       <h1 className='text-3xl text-white m-20'>Home</h1>
-      {currentUser && (
-        <h3 className='text-3xl text-white m-20'>
-          Welcome {currentUser.username}
-        </h3>
-      )}
-      <Loading />
+      {currentUser && <h3 className='text-3xl text-white m-20'></h3>}
     </div>
   );
 };
