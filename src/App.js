@@ -11,6 +11,8 @@ import { useStateContext } from './Contexts/ContextProvider';
 import { Banana } from './Pages/banana';
 import { Home } from './Pages/Home';
 import { SignUp } from './Pages/auth/signup';
+import { SignIn } from './Pages/auth/signin';
+import { SignOut } from './Pages/auth/signout';
 
 // Components
 import { Navbar, Footer, Sidebar, ThemeSettings } from './Components';
@@ -68,6 +70,8 @@ const App = () => {
               <Route path='/' element={<Home />} />
               <Route path='/banana' element={<Banana />} />
               <Route path='/auth/signup' element={<SignUp />} />
+              <Route path='/auth/signin' element={<SignIn />} />
+              <Route path='/auth/signout' element={<SignOut />} />
             </Routes>
             <Footer />
           </div>
