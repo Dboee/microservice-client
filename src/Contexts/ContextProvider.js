@@ -40,8 +40,8 @@ export const ContextProvider = ({ children }) => {
     setCurrentUser(res.data.currentUser);
   };
 
-  useEffect(() => {
-    APIgetCurrentUser();
+  useEffect(async () => {
+    await APIgetCurrentUser();
   }, []);
 
   return (
