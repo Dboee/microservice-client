@@ -26,6 +26,18 @@ export const SignUp = () => {
       console.log('Success');
     },
   });
+  const { doSignIn } = useRequest({
+    url: '/api/users/signin',
+    method: 'post',
+    body: {
+      email,
+      password,
+    },
+    onSuccess: () => {
+      navigate('/');
+      console.log('Success');
+    },
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,6 +45,7 @@ export const SignUp = () => {
       setComponentErrors([{ message: 'Passwords do not match' }]);
     } else {
       await doRequest();
+      await doSignIn();
     }
   };
 
@@ -150,7 +163,7 @@ export const SignUp = () => {
             <div className='flex items-center justify-end mt-4'>
               <a
                 className='text-sm text-gray-600 underline hover:text-gray-900'
-                href='#'
+                href='/auth/signin'
               >
                 Already registered?
               </a>
