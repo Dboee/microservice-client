@@ -41,6 +41,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   useEffect(async () => {
+    setCurrentMode('Dark');
     await APIgetCurrentUser();
   }, []);
 
