@@ -13,6 +13,7 @@ export const Home = () => {
     <div>
       <h1 className='text-3xl text-white m-20'>Home</h1>
       {currentUser && <h3 className='text-3xl text-white m-20'></h3>}
+      {currentUser && <OverLoadButton />}
     </div>
   );
 };
